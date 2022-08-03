@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\AspireAPI.Domain\AspireAPI.Domain.csproj" />
+    <ProjectReference Include="..\..\AspireAPI.DTO\AspireAPI.DTO\AspireAPI.DTO.csproj" />
     <ProjectReference Include="..\..\AspireAPI.Infrastructure\AspireAPI.Infrastructure.csproj" />
   </ItemGroup>
 
