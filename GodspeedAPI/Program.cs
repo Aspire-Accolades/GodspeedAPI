@@ -1,5 +1,9 @@
 using Aspire.Security.Secrets;
+using AspireAPI.Domain.DAL;
 using AspireAPI.Domain.DAL.DatabaseContext;
+using AspireAPI.Domain.DAL.UI;
+using AspireAPI.Infrastructure.Interfaces;
+using AspireAPI.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AspireDBContext>(options => options.UseSqlServer(Keys.ConnectionString));
+builder.Services.AddScoped<IGenericCRUD<Entity>, EntityRepository>();
+builder.Services.AddScoped<IGenericCRUD<EntityApplication>, EntityApplicationRepository>();
+builder.Services.AddScoped<IGenericCRUD<EntityApplicationSettings>, EntityApplicationSettingsRepository>();
+builder.Services.AddScoped<IGenericCRUD<NavLinks>, NavItemsReporsitory>();
+builder.Services.AddScoped<IGenericCRUD<Background>, BackgroundRepository>();
+
 builder.Services.AddMvc();
 
 var app = builder.Build();

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AspireAPI.Domain\AspireAPI.Domain.csproj" />
-    <ProjectReference Include="..\..\AspireAPI.DTO\AspireAPI.DTO\AspireAPI.DTO.csproj" />
     <ProjectReference Include="..\..\AspireAPI.Infrastructure\AspireAPI.Infrastructure.csproj" />
   </ItemGroup>
 
