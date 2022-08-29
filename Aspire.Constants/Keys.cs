@@ -7,6 +7,8 @@
     public const string Database = "Database";
     public const string Application = "Application";
     public const string SysName = "Name";
+    public const string Settings = "Settings";
+    public const string WebSettings = "WebSettings";
 
   }
 }
