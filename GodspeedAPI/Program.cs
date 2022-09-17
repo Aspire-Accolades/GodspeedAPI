@@ -1,33 +1,31 @@
 using Aspire.Security;
 using Aspire.Security.Secrets;
+using Aspire.Util;
 using AspireAPI.Domain.DAL;
 using AspireAPI.Domain.DAL.DatabaseContext;
 using AspireAPI.Domain.DAL.UI;
+using AspireAPI.Infrastructure.Helpers;
 using AspireAPI.Infrastructure.Interfaces;
 using AspireAPI.Infrastructure.Repositories;
+using GodspeedAPI;
 using GodspeedAPI.Models;
+using HttpTracing;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var config = new ConfigurationBuilder()
-       .AddJsonFile("appsettings.json", optional: false)
-       .Build();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AspireDBContext>(options => options.UseSqlServer(SQLConnectionStringBuilder.GetConnectionString(config)));
-builder.Services.AddScoped<EntityRepository>();
-builder.Services.AddScoped<EntityApplicationRepository>();
-builder.Services.AddScoped<EntityApplicationSettingsRepository>();
-builder.Services.AddScoped<EntityApplicationUserRepository>();
-builder.Services.AddScoped<NavItemsReporsitory>();
-builder.Services.AddScoped<BackgroundRepository>();
+builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<HttpEventListener>();
+builder.Services.AddScoped<Logger>();
+builder.Services.AddScoped<SQLConnectionManager>();
+builder.Services.AddDbContext<AspireDBContext>();
+builder.Services.AddScoped<InjectionHelper>();
+InjectionHelper.Extend(builder.Services);
 builder.Services.AddScoped<ApplicationSettings>();
-builder.Services.AddScoped<PasswordRepository>();
-builder.Services.AddScoped<PersonRepository>();
-
 builder.Services.AddMvc();
 
 var app = builder.Build();
