@@ -14,8 +14,9 @@ namespace GodspeedAPI.Models
     public EntityApplicationSettings setting { get; set; }
     public List<NavLinks> nav { get; set; }
     public Background background { get; set; }
+    public List<Forms> forms { get; set; }
 
-    public ApplicationSettings(IConfiguration iConfig, Logger logger, EntityRepository entityRepository, EntityApplicationRepository entityApplicationRepository, EntityApplicationSettingsRepository settingRepository, NavItemsReporsitory navRepository, BackgroundRepository backgroundRepository)
+    public ApplicationSettings(IConfiguration iConfig, Logger logger, EntityRepository entityRepository, EntityApplicationRepository entityApplicationRepository, EntityApplicationSettingsRepository settingRepository, NavItemsReporsitory navRepository, BackgroundRepository backgroundRepository, FormRepository formRepository)
     {
       handle = new BaseHandler(logger);
       string name = iConfig.GetValue<string>("Settings:Application");
@@ -28,6 +29,7 @@ namespace GodspeedAPI.Models
         setting = settingRepository.ReadWhere(x => x.EntityApplicationID == application.EntityApplicationID).FirstOrDefault();
         nav = navRepository.ReadWhere(x => x.EntityApplicationID == application.EntityApplicationID).ToList();
         background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == application.EntityApplicationID).FirstOrDefault();
+        forms = formRepository.ReadWhere(x => x.EntityApplicationID == application.EntityApplicationID).ToList();
       }, "Application Settings Error");
     }
   }

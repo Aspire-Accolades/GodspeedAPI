@@ -5,7 +5,7 @@ namespace Aspire.Util
 {
   public class Logger
   {
-    public ILogger<Logger> _logger { get; set; }
+    public ILogger<object> _logger { get; set; }
     public string _directoryPath
     {
       get
@@ -29,9 +29,13 @@ namespace Aspire.Util
       }
     }
 
-    public Logger(ILogger<Logger> logger)
+    public Logger(ILogger<object> logger)
     {
       _logger = logger;
+      checkFolder();
+    }
+    private void checkFolder()
+    {
       if (!_hasDirectory)
       {
         Directory.CreateDirectory(_directoryPath);

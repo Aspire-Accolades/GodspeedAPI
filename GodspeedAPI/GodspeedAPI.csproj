@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AspireAPI.Domain\AspireAPI.Domain.csproj" />
     <ProjectReference Include="..\..\AspireAPI.Infrastructure\AspireAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\RabbitMQ\Tools\RabbitMQ.Tools.csproj" />
     <ProjectReference Include="..\Aspire.Util\Aspire.Util.csproj" />
   </ItemGroup>
 

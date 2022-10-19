@@ -73,7 +73,7 @@ namespace GodspeedAPI.Controllers
     [Route("auth/login")]
     public IActionResult Login(string email, string password)
     {
-      Person person = _personRepo.ReadWhere(x => x.Email == email).FirstOrDefault();
+      Person person = _personRepo.ReadWhere(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
       if (person != null)
       {
         EntityApplicationUser user = _userRepository.ReadWhere(x => x.PersonID == person.PersonID).FirstOrDefault();
