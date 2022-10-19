@@ -4,6 +4,7 @@ using AspireAPI.Infrastructure.Enums;
 using AspireAPI.Infrastructure.Repositories;
 using GodspeedAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace GodspeedAPI.Controllers
@@ -73,6 +74,7 @@ namespace GodspeedAPI.Controllers
     [Route("auth/login")]
     public IActionResult Login(string email, string password)
     {
+      AuthenticationResponse response = new AuthenticationResponse();
       Person person = _personRepo.ReadWhere(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
       if (person != null)
       {
@@ -82,18 +84,22 @@ namespace GodspeedAPI.Controllers
 
         if (AuthTools.ConfirmPassword(password, userPassword.password))
         {
-          _isAuthenticated = true;
-          return Ok(user);
+          response.IsAuthenticated = true;
+          response.Token = userPassword.Token;
+          response.Message = "Authenticated successfully";
+          return Ok(response);
         }
         else
         {
-          return BadRequest("Incorrect password");
+          response.Message = "Incorrect password";
+          return Ok(response);
         }
 
       }
       else
       {
-        return NotFound();
+        response.Message = "User does not exist";
+        return Ok(response);
       }
     }
 

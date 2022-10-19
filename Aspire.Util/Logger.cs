@@ -1,5 +1,9 @@
 ﻿using Aspire.Constants;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Xml;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Aspire.Util
 {
@@ -34,6 +38,11 @@ namespace Aspire.Util
       _logger = logger;
       checkFolder();
     }
+
+    public Logger()
+    {
+      checkFolder();
+    }
     private void checkFolder()
     {
       if (!_hasDirectory)
@@ -61,6 +70,11 @@ namespace Aspire.Util
         else
           Console.WriteLine(ex.Message);
       }
+    }
+
+    public void LogResponse(IActionResult result)
+    {
+      Log("Godspeed Response: \n" + JsonConvert.SerializeObject(result, Formatting.Indented));
     }
 
     public void Write()

@@ -18,6 +18,7 @@ namespace GodspeedAPI.Models
 
     public ApplicationSettings(IConfiguration iConfig, Logger logger, EntityRepository entityRepository, EntityApplicationRepository entityApplicationRepository, EntityApplicationSettingsRepository settingRepository, NavItemsReporsitory navRepository, BackgroundRepository backgroundRepository, FormRepository formRepository)
     {
+
       handle = new BaseHandler(logger);
       string name = iConfig.GetValue<string>("Settings:Application");
       handle.TryCatch(true, () =>

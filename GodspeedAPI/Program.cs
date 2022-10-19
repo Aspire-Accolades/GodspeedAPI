@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<HttpEventListener>();
 builder.Services.AddScoped<Logger>();
+builder.Services.AddScoped<BaseHandler>();
 builder.Services.AddScoped<SQLConnectionManager>();
 builder.Services.AddDbContext<AspireDBContext>();
 builder.Services.AddScoped<InjectionHelper>();
