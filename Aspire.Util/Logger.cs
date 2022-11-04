@@ -9,7 +9,7 @@ namespace Aspire.Util
 {
   public class Logger
   {
-    public ILogger<object> _logger { get; set; }
+    public ILogger<object>? _logger { get; set; }
     public string _directoryPath
     {
       get
@@ -60,7 +60,7 @@ namespace Aspire.Util
           string text = $"{DateTime.Now}: {message}";
           writer.WriteLine(text);
 
-          _logger.LogInformation(text);
+          _logger?.LogInformation(text);
           }
       }
       catch (Exception ex)

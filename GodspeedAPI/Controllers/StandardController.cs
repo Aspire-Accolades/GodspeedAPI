@@ -24,7 +24,7 @@ namespace GodspeedAPI.Controllers
     public ApplicationSettings _appSettings { get; set; }
     public EntityRepository _entityRepo { get; set; }
 
-    public StandardController(Logger logger, ApplicationSettings appSettings, EntityRepository entityRepository)
+    public StandardController(ILogger<StandardController> logger, ApplicationSettings appSettings, EntityRepository entityRepository)
     {
       handle = new BaseHandler(logger);
       _appSettings = appSettings;

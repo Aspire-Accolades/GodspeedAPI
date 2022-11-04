@@ -1,4 +1,5 @@
-﻿using Aspire.Security;
+﻿using AAFramework.Enums;
+using Aspire.Security;
 using AspireAPI.Domain.DAL;
 using AspireAPI.Infrastructure.Enums;
 using AspireAPI.Infrastructure.Repositories;
@@ -11,12 +12,12 @@ namespace GodspeedAPI.Controllers
 {
   public class AuthController : Controller
   {
-    public ApplicationSettings _appSettings { get; set; }
+    ApplicationSettings _appSettings;
     PersonRepository _personRepo;
     EntityApplicationUserRepository _userRepository;
     PasswordRepository _passwordRepository;
 
-    bool _isAuthenticated;
+
     public AuthController(ILogger<AuthController> logger, ApplicationSettings appSettings, PersonRepository personRepository, EntityApplicationUserRepository entityApplicationUserRepository, PasswordRepository passwordRepository)
     {
       _appSettings = appSettings;
@@ -28,6 +29,7 @@ namespace GodspeedAPI.Controllers
     [Route("auth/register")]
     public IActionResult Register([FromBody] UserRegistration UserRegistration)
     {
+
       Person person = new Person();
       person.FirstName = UserRegistration.FirstName;
       person.LastName = UserRegistration.LastName;
@@ -40,11 +42,12 @@ namespace GodspeedAPI.Controllers
       person.UserModified = "Godspeed API";
 
       person = _personRepo.Create(person);
+
       EntityApplicationUser user = new EntityApplicationUser
       {
         EntityApplicationID = _appSettings.application.EntityApplicationID,
         PersonID = person.PersonID,
-        Role = (int)ApplicationRoleEnum.Administrator,
+        Role = _appSettings.Portal,
         AlternateID = Guid.NewGuid().ToString(),
         DateAdded = DateTime.UtcNow,
         UserAdded = "Godspeed API",
@@ -52,12 +55,12 @@ namespace GodspeedAPI.Controllers
         UserModified = "Godspeed API"
       };
       user = _userRepository.Create(user);
-      byte[] tokenBytes = Encoding.ASCII.GetBytes(person.Email + user.EntityApplicationUserID + UserRegistration.Password);
+
 
       Password auth = new Password
       {
         EntityApplicationUserID = user.EntityApplicationUserID,
-        Token = BitConverter.ToString(tokenBytes).Replace("-", "").ToUpper(),
+        Token = Guid.NewGuid().ToString().ToUpper(),
         password = AuthTools.Hash(UserRegistration.Password),
         DateAdded = DateTime.UtcNow,
         UserAdded = "Godspeed API",
@@ -67,7 +70,15 @@ namespace GodspeedAPI.Controllers
       };
       _passwordRepository.Create(auth);
 
-      return Ok(user);
+      AuthenticationResponse response = new AuthenticationResponse
+      {
+        IsAuthenticated = true,
+        Message = "Registered Successfully",
+        Token = auth.Token
+
+      };
+
+      return Ok(response);
     }
 
     [HttpGet]
@@ -75,25 +86,45 @@ namespace GodspeedAPI.Controllers
     public IActionResult Login(string email, string password)
     {
       AuthenticationResponse response = new AuthenticationResponse();
-      Person person = _personRepo.ReadWhere(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+      Person person = _personRepo.ReadWhere( x => x.EntityID == _appSettings.entity.EntityID && x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+
       if (person != null)
       {
-        EntityApplicationUser user = _userRepository.ReadWhere(x => x.PersonID == person.PersonID).FirstOrDefault();
-        Password userPassword = _passwordRepository.ReadWhere(x => x.EntityApplicationUserID == user.EntityApplicationUserID).FirstOrDefault();
-        password = AuthTools.Hash(password);
 
-        if (AuthTools.ConfirmPassword(password, userPassword.password))
+        IEnumerable<EntityApplicationUser> query = _userRepository.ReadWhere(x => x.PersonID == person.PersonID && x.EntityApplicationID == _appSettings.application.EntityApplicationID);
+
+        if (_appSettings.Portal == (int)Portal.Admin) query = query.Where(x => x.Role == (int)Role.Administrator);
+        if (_appSettings.Portal == (int)Portal.Customer) query = query.Where(x => x.Role == (int)Role.Customer);
+
+        if (query.Any())
         {
-          response.IsAuthenticated = true;
-          response.Token = userPassword.Token;
-          response.Message = "Authenticated successfully";
-          return Ok(response);
+
+          EntityApplicationUser user = query.First();
+          
+          Password userPassword = _passwordRepository.ReadWhere(x => x.EntityApplicationUserID == user.EntityApplicationUserID).FirstOrDefault();
+          password = AuthTools.Hash(password);
+
+          if (AuthTools.ConfirmPassword(password, userPassword.password))
+          {
+            response.Portal = _appSettings.Portal;
+            response.IsAuthenticated = true;
+            response.Token = userPassword.Token;
+            response.Message = "Authenticated successfully";
+            return Ok(response);
+          }
+          else
+          {
+            response.Message = "Incorrect password";
+            return Ok(response);
+          }
         }
         else
         {
-          response.Message = "Incorrect password";
+          response.Message = "User does not have acccess";
           return Ok(response);
         }
+
+       
 
       }
       else

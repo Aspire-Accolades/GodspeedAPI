@@ -1,6 +1,5 @@
 ﻿using Aspire.Util;
 using AspireAPI.Domain.DAL;
-using AspireAPI.Domain.DAL.UI;
 using AspireAPI.Infrastructure.Helpers;
 using AspireAPI.Infrastructure.Repositories;
 
@@ -9,18 +8,17 @@ namespace GodspeedAPI.Models
   public class ApplicationSettings
   {
     BaseHandler handle;
-    public Entity entity { get; set; }
-    public EntityApplication application { get; set; }
-    public EntityApplicationSettings setting { get; set; }
-    public List<NavLinks> nav { get; set; }
-    public Background background { get; set; }
-    public List<Forms> forms { get; set; }
+
+    public Entity Entity { get; set; }
+    public int Portal { get; private set; }
+    public EntityApplication? application { get; private set; }
 
     public ApplicationSettings(IConfiguration iConfig, Logger logger, EntityRepository entityRepository, EntityApplicationRepository entityApplicationRepository, EntityApplicationSettingsRepository settingRepository, NavItemsReporsitory navRepository, BackgroundRepository backgroundRepository, FormRepository formRepository)
     {
 
       handle = new BaseHandler(logger);
       string name = iConfig.GetValue<string>("Settings:Application");
+      Portal = iConfig.GetValue<int>("Settings:Portal");
       handle.TryCatch(true, () =>
       {
         logger.Log("Obtaining settings for " + name);

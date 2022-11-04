@@ -20,7 +20,18 @@
     <ProjectReference Include="..\..\AspireAPI.Domain\AspireAPI.Domain.csproj" />
     <ProjectReference Include="..\..\AspireAPI.Infrastructure\AspireAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\..\RabbitMQ\Tools\RabbitMQ.Tools.csproj" />
+    <ProjectReference Include="..\AAFramework\AAFramework.csproj" />
     <ProjectReference Include="..\Aspire.Util\Aspire.Util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Aspire.Security">
+      <HintPath>..\..\Aspire.Security\Aspire.Security\obj\Debug\net6.0\ref\Aspire.Security.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
