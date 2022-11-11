@@ -11,88 +11,43 @@ namespace Godspeed.Infrastructure.Helpers
 {
   public static class ConfigurationHelper
   {
-    public static Config Get<Config>() where Config : class, ISysConfig, new()
+    public static Configuration Get<Configuration>() where Configuration : class, ISysConfig, new()
     {
-      Config val = new Config();
-      reflectConfigToObject(val);
+      Configuration val = new Configuration();
+      reflectOnType(val);
       return val;
     }
 
-    public static Config Get<Config>(IConfiguration configuration) where Config : class, ISysConfig, new()
+    public static Configuration Get<Configuration>(IConfiguration configuration) where Configuration : class, ISysConfig, new()
     {
-      Config val = new Config();
-      reflectConfigToObject(val, null, null, configuration);
+      Configuration val = new Configuration();
+      reflectOnType(val,configuration);
       return val;
     }
 
-    public static Config GetAuth<Config>(IConfiguration configuration) where Config : class, IServerAuthConfig, new()
+    public static Configuration GetAuth<Configuration>(IConfiguration configuration) where Configuration : class, IServerAuthConfig, new()
     {
-      Config val = new Config();
-      reflectConfigToObject(val, null, null, configuration);
+      Configuration val = new Configuration();
+      reflectOnType(val,configuration);
       return val;
     }
 
-    public static Config GetBrokerConfig<Config>(AppSettingsSection appSettings) where Config : class, ISysConfig, new()
-    {
-      Config val = new Config();
-      reflectConfigToObject(val, null, appSettings);
-      return val;
-    }
-
-    public static ISysConfig GetBrokerConfig(Type config)
-    {
-      if (typeof(ISysConfig).IsAssignableFrom(config))
-      {
-        ISysConfig obj = (ISysConfig)Activator.CreateInstance(config);
-        reflectConfigToObject(obj, config);
-        return obj;
-      }
-
-      throw new Exception("The provided type " + config.Name + " cannot be used for configuration");
-    }
-
-
-    public static string GetConfigProperty(string key, AppSettingsSection appSettings = null, IConfiguration configuration = null)
+    public static string GetProperty(string key, IConfiguration configuration)
     {
       if (configuration != null && !string.IsNullOrEmpty(key))
       {
         return configuration.GetSection(key)?.Value;
       }
 
-      if (appSettings != null && appSettings.Settings.AllKeys.Any((string x) => x == key))
-      {
-        return appSettings.Settings[key].Value;
-      }
-
-      if (ConfigurationManager.AppSettings.AllKeys.Any((string x) => x == key))
-      {
-        return ConfigurationManager.AppSettings[key];
-      }
-
       return string.Empty;
     }
 
-    public static Config CopyConfig<Config>(Config config, bool reflectClasses = false) where Config : class, new()
-    {
-      Config copy = new Config();
-      Parallel.ForEach(typeof(Config).GetProperties(), delegate (PropertyInfo prop)
-      {
-        object value = prop.GetValue(config);
-        if (reflectClasses && value.GetType().IsClass && !value.GetType().IsEnum && !(value.GetType() == typeof(string)))
-        {
-          makeGenericMethod(value.GetType(), "CopyConfig").Invoke(null, new object[2] { value, reflectClasses });
-        }
 
-        prop.SetValue(copy, value);
-      });
-      return copy;
-    }
 
-    private static void reflectConfigToObject<Config>(Config target, Type reflectType = null, AppSettingsSection appSettings = null, IConfiguration configuration = null)
+    private static void reflectOnType<Configuration>(Configuration target, IConfiguration configuration = null)
     {
-      PropertyInfo[] array = null;
-      array = ((!(reflectType == null)) ? reflectType.GetProperties() : typeof(Config).GetProperties());
-      Parallel.ForEach(array, delegate (PropertyInfo property)
+
+      Parallel.ForEach(typeof(Configuration).GetProperties(), delegate (PropertyInfo property)
       {
         CustomAttributeData customAttributeData = property.CustomAttributes.FirstOrDefault((CustomAttributeData x) => x.AttributeType == typeof(ConfigurationValueAttribute));
         string key = property.Name;
@@ -101,7 +56,7 @@ namespace Godspeed.Infrastructure.Helpers
           key = ((ConfigurationValueAttribute)Attribute.GetCustomAttribute(property, customAttributeData.AttributeType)).ConfigKey;
         }
 
-        string configProperty = GetConfigProperty(key, appSettings, configuration);
+        string configProperty = GetProperty(key, configuration);
         setProperty(property, target, configProperty);
       });
     }
@@ -155,9 +110,5 @@ namespace Godspeed.Infrastructure.Helpers
       property.SetValue(target, value2);
     }
 
-    private static MethodInfo makeGenericMethod(Type genericType, string methodName)
-    {
-      return typeof(ConfigurationHelper).GetMethod(methodName).MakeGenericMethod(genericType);
-    }
   }
 }
