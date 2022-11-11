@@ -1,57 +1,71 @@
-﻿using AspireAPI.Domain.DAL;
-using AspireAPI.Domain.DAL.UI;
-using AspireAPI.Infrastructure.Helpers;
-using AspireAPI.Infrastructure.Repositories;
-using GodspeedAPI.Models;
+﻿using Godspeed.Domain.Models.Manage;
+using Godspeed.Domain.Models.UI;
+using Godspeed.Infrastructure.Helpers;
+using Godspeed.Infrastructure.Repositories;
+using GodspeedAPI.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Reflection.Metadata;
 
 namespace GodspeedAPI.Controllers
 {
-  public class UIController : Controller
+  public class UIController : BaseController
   {
-    BaseHandler _handler;
-    BackgroundRepository _backgroundRepository;
-    NavItemsReporsitory _navItemsReporsitory;
-    FormRepository _formRepository;
-    EntityApplication _application = new EntityApplication();
-    IActionResult result;
-
-
-    public UIController(BaseHandler handler, ApplicationSettings applicationSettings, BackgroundRepository backgroundRepo, NavItemsReporsitory navItemsRepo, FormRepository formRepo)
+    readonly BackgroundRepository backgroundRepository;
+    readonly NavItemsReporsitory navItemsReporsitory;
+    readonly FormRepository formRepository;
+    public UIController(ApplicationHelper appHelper, 
+                        BackgroundRepository backgroundRepository, 
+                        NavItemsReporsitory navItemsReporsitory, 
+                        FormRepository formRepository)
+      : base(appHelper)
     {
 
-      _handler = handler;
-      _backgroundRepository = backgroundRepo;
-      _navItemsReporsitory = navItemsRepo;
-      _formRepository = formRepo;
-      _application = applicationSettings.application;
+      this.backgroundRepository = backgroundRepository;
+      this.navItemsReporsitory = navItemsReporsitory;
+      this.formRepository = formRepository;
     }
-
+    
     [HttpGet]
     [Route("ui/background")]
     public IActionResult GetBackground()
     {
-      _handler._logger.Log("Background requested for " + _application.Name);
-     return _handler.RequestTryCatch(true, () =>
-      {
-        Background background = _backgroundRepository.ReadWhere(x => x.EntityApplicationID == _application.EntityApplicationID).FirstOrDefault();
-
-        if(background == null)
-        {
-          result = BadRequest();
-          return result;
-        }
-        else
-        {
-       
-          result = Ok(background);
-          _handler._logger.LogResponse(result);
-          return result;
-        }
-      });
-
+      Background background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID).FirstOrDefault();
+      return Ok(background);
     }
+
+    [HttpGet]
+    [Route("ui/nav")]
+    public IActionResult GetNavItems()
+    {
+      IEnumerable<NavLinks> navItems = navItemsReporsitory.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
+      return Ok(navItems);
+    }
+
+    [HttpGet]
+    [Route("ui/forms")]
+    public IActionResult GetFormsStyles()
+    {
+      IEnumerable<Forms> forms = formRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
+      return Ok(forms);
+    }
+
+    [HttpGet]
+    [Route("ui/system")]
+    public IActionResult GetSystem()
+    {
+      Background background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID).FirstOrDefault();
+      IEnumerable<NavLinks> navItems = navItemsReporsitory.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
+      IEnumerable<Forms> forms = formRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
+
+      return Ok(new
+      {
+        Application,
+        background,
+        navItems,
+        forms
+      });
+    }
+
+
   }
 }

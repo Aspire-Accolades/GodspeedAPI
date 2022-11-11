@@ -1,0 +1,20 @@
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Godspeed.Domain.Models.Manage
+{
+  [Table(nameof(Entity), Schema = "Manage")]
+  public class Entity
+  {
+    public int EntityID { get; set; }
+    public string Name { get; set; } = String.Empty;
+    public string Domain { get; set; } = String.Empty;
+    public DateTime DateAdded { get; set; }
+    public string UserAdded { get; set; } = String.Empty;
+    public DateTime DateModified { get; set; }
+    public string UserModified { get; set; } = String.Empty;
+
+    public ICollection<EntityApplication> Applications { get; set; }
+
+  }
+}

@@ -3,28 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireAPI.Domain", "..\AspireAPI.Domain\AspireAPI.Domain.csproj", "{E235C953-81E4-4B1B-AA05-50F1AAF12037}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireAPI.Infrastructure", "..\AspireAPI.Infrastructure\AspireAPI.Infrastructure.csproj", "{C42F6A54-E9AF-4671-872F-C2D9A0C904D4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE8BF9F1-C609-43D6-AA37-07E8D616BD09}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Constants", "Aspire.Constants\Aspire.Constants.csproj", "{8885B3E5-871B-4C19-BEAF-9E6FCB812719}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Security", "..\Aspire.Security\Aspire.Security\Aspire.Security.csproj", "{508A1E43-850E-4A9C-97A7-87A3400546FB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Util", "Aspire.Util\Aspire.Util.csproj", "{D53ED6C3-386A-426C-870B-154CA74D9019}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AAFramework", "AAFramework\AAFramework.csproj", "{205E0772-3086-4595-9A17-55D428F90552}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBox", "DataBox\DataBox.csproj", "{7A9D8080-8F2B-46DE-A5C2-22787E20C225}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ.Tools", "..\RabbitMQ\Tools\RabbitMQ.Tools.csproj", "{72843DFF-30D3-453E-B031-C222CF694B9F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GodspeedAPI", "GodspeedAPI\GodspeedAPI.csproj", "{B1622644-768C-4CCB-BD0E-BFDD99944B20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godspeed.Domain", "Godspeed.Domain\Godspeed.Domain.csproj", "{C42F61F2-C13F-4830-90DC-EC9DDA84C3AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godspeed.Infrastructure", "Godspeed.Infrastructure\Godspeed.Infrastructure.csproj", "{6F14F29F-C5BD-4F5E-96B6-0FF08C60C770}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,42 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E235C953-81E4-4B1B-AA05-50F1AAF12037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E235C953-81E4-4B1B-AA05-50F1AAF12037}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E235C953-81E4-4B1B-AA05-50F1AAF12037}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E235C953-81E4-4B1B-AA05-50F1AAF12037}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C42F6A54-E9AF-4671-872F-C2D9A0C904D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C42F6A54-E9AF-4671-872F-C2D9A0C904D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C42F6A54-E9AF-4671-872F-C2D9A0C904D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C42F6A54-E9AF-4671-872F-C2D9A0C904D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8885B3E5-871B-4C19-BEAF-9E6FCB812719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8885B3E5-871B-4C19-BEAF-9E6FCB812719}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8885B3E5-871B-4C19-BEAF-9E6FCB812719}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8885B3E5-871B-4C19-BEAF-9E6FCB812719}.Release|Any CPU.Build.0 = Release|Any CPU
-		{508A1E43-850E-4A9C-97A7-87A3400546FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{508A1E43-850E-4A9C-97A7-87A3400546FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{508A1E43-850E-4A9C-97A7-87A3400546FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{508A1E43-850E-4A9C-97A7-87A3400546FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D53ED6C3-386A-426C-870B-154CA74D9019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D53ED6C3-386A-426C-870B-154CA74D9019}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D53ED6C3-386A-426C-870B-154CA74D9019}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D53ED6C3-386A-426C-870B-154CA74D9019}.Release|Any CPU.Build.0 = Release|Any CPU
-		{205E0772-3086-4595-9A17-55D428F90552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{205E0772-3086-4595-9A17-55D428F90552}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{205E0772-3086-4595-9A17-55D428F90552}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{205E0772-3086-4595-9A17-55D428F90552}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A9D8080-8F2B-46DE-A5C2-22787E20C225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A9D8080-8F2B-46DE-A5C2-22787E20C225}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A9D8080-8F2B-46DE-A5C2-22787E20C225}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A9D8080-8F2B-46DE-A5C2-22787E20C225}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72843DFF-30D3-453E-B031-C222CF694B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72843DFF-30D3-453E-B031-C222CF694B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72843DFF-30D3-453E-B031-C222CF694B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72843DFF-30D3-453E-B031-C222CF694B9F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1622644-768C-4CCB-BD0E-BFDD99944B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1622644-768C-4CCB-BD0E-BFDD99944B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1622644-768C-4CCB-BD0E-BFDD99944B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1622644-768C-4CCB-BD0E-BFDD99944B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C42F61F2-C13F-4830-90DC-EC9DDA84C3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42F61F2-C13F-4830-90DC-EC9DDA84C3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42F61F2-C13F-4830-90DC-EC9DDA84C3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42F61F2-C13F-4830-90DC-EC9DDA84C3AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F14F29F-C5BD-4F5E-96B6-0FF08C60C770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F14F29F-C5BD-4F5E-96B6-0FF08C60C770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F14F29F-C5BD-4F5E-96B6-0FF08C60C770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F14F29F-C5BD-4F5E-96B6-0FF08C60C770}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

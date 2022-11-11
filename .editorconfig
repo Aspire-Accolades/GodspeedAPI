@@ -1,7 +1,7 @@
 ﻿[*.cs]
 
 # CS8601: Possible null reference assignment.
-dotnet_diagnostic.CS8601.severity = warning
+dotnet_diagnostic.CS8601.severity = none
 csharp_indent_labels = no_change
 csharp_using_directive_placement = outside_namespace:silent
 csharp_prefer_simple_using_statement = true:suggestion
@@ -17,6 +17,12 @@ csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
 csharp_style_throw_expression = true:suggestion
 csharp_style_prefer_null_check_over_type_check = true:suggestion
+
+# CS8603: Possible null reference return.
+dotnet_diagnostic.CS8603.severity = none
+
+# CS8600: Converting null literal or possible null value to non-nullable type.
+dotnet_diagnostic.CS8600.severity = none
 
 [*.{cs,vb}]
 #### Naming styles ####

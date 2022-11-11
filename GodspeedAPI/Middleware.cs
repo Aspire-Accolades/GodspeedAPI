@@ -1,9 +1,8 @@
-﻿using Aspire.Security;
-using Aspire.Util;
-using AspireAPI.Domain.DAL.DatabaseContext;
-using AspireAPI.Infrastructure.Helpers;
-using GodspeedAPI.Models;
-using HttpTracing;
+﻿
+using Godspeed.Infrastructure.Context;
+using Godspeed.Infrastructure.Context.Aspire;
+using Godspeed.Infrastructure.Helpers;
+using Godspeed.Infrastructure.Repositories;
 
 namespace GodspeedAPI
 {
@@ -11,13 +10,15 @@ namespace GodspeedAPI
   {
     public static void Extend(this IServiceCollection services)
     {
-      services.AddScoped<HttpEventListener>();
-      services.AddSingleton<Logger>();
-      services.AddSingleton<BaseHandler>();
-      services.AddSingleton<SQLConnectionManager>();
-      services.AddDbContext<AspireDBContext>();
-      services.AddScoped<ApplicationSettings>();
-
+      services.AddScoped<AspireContextOptions>();
+      services.AddDbContext<AspireWebContext>();
+      services.AddScoped<EntityRepository>();
+      services.AddScoped<EntityApplicationRepository>();
+      services.AddScoped<EntityApplicationSettingsRepository>();
+      services.AddScoped<BackgroundRepository>();
+      services.AddScoped<NavItemsReporsitory>();
+      services.AddScoped<FormRepository>();
+      services.AddScoped<ApplicationHelper>();
     }
   }
 }
