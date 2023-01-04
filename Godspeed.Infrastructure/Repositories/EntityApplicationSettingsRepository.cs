@@ -4,7 +4,7 @@ using Godspeed.Infrastructure.Repositories.Base;
 
 namespace Godspeed.Infrastructure.Repositories
 {
-  public class EntityApplicationSettingsRepository : GenericRepository<EntityApplicationSettings, AspireWebContext>
+  public class EntityApplicationSettingsRepository : GenericRepository<StoreSettings, AspireWebContext>
   {
         public EntityApplicationSettingsRepository(AspireWebContext ctx) : base(ctx)
         {

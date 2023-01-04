@@ -1,6 +1,5 @@
 ﻿using Godspeed.Domain.Models.Manage;
 using Godspeed.Domain.Models.UI;
-using Godspeed.Infrastructure.Helpers;
 using Godspeed.Infrastructure.Repositories;
 using GodspeedAPI.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -13,58 +12,69 @@ namespace GodspeedAPI.Controllers
     readonly BackgroundRepository backgroundRepository;
     readonly NavItemsReporsitory navItemsReporsitory;
     readonly FormRepository formRepository;
-    public UIController(ApplicationHelper appHelper, 
+    readonly StoreRepository storeRepository;
+    public UIController(
                         BackgroundRepository backgroundRepository, 
                         NavItemsReporsitory navItemsReporsitory, 
-                        FormRepository formRepository)
-      : base(appHelper)
+                        FormRepository formRepository,
+                        StoreRepository storeRepository)
     {
 
       this.backgroundRepository = backgroundRepository;
       this.navItemsReporsitory = navItemsReporsitory;
       this.formRepository = formRepository;
-    }
-    
-    [HttpGet]
-    [Route("ui/background")]
-    public IActionResult GetBackground()
-    {
-      Background background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID).FirstOrDefault();
-      return Ok(background);
+      this.storeRepository = storeRepository;
     }
 
     [HttpGet]
-    [Route("ui/nav")]
-    public IActionResult GetNavItems()
+    [Route("ui/store")]
+    public IActionResult GetStore()
     {
-      IEnumerable<NavLinks> navItems = navItemsReporsitory.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
-      return Ok(navItems);
+      Store store = storeRepository.ReadAll().FirstOrDefault();
+      return Ok(store);
     }
 
-    [HttpGet]
-    [Route("ui/forms")]
-    public IActionResult GetFormsStyles()
-    {
-      IEnumerable<Forms> forms = formRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
-      return Ok(forms);
-    }
 
-    [HttpGet]
-    [Route("ui/system")]
-    public IActionResult GetSystem()
-    {
-      Background background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID).FirstOrDefault();
-      IEnumerable<NavLinks> navItems = navItemsReporsitory.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
-      IEnumerable<Forms> forms = formRepository.ReadWhere(x => x.EntityApplicationID == Application.EntityApplicationID);
+    //[HttpGet]
+    //[Route("ui/background")]
+    //public IActionResult GetBackground()
+    //{
+    //  Background background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == Store.EntityApplicationID).FirstOrDefault();
+    //  return Ok(background);
+    //}
 
-      return Ok(new
-      {
-        Application,
-        background,
-        navItems,
-        forms
-      });
-    }
+    //[HttpGet]
+    //[Route("ui/nav")]
+    //public IActionResult GetNavItems()
+    //{
+    //  IEnumerable<NavLinks> navItems = navItemsReporsitory.ReadWhere(x => x.EntityApplicationID == Store.EntityApplicationID);
+    //  return Ok(navItems);
+    //}
+
+    //[HttpGet]
+    //[Route("ui/forms")]
+    //public IActionResult GetFormsStyles()
+    //{
+    //  IEnumerable<Forms> forms = formRepository.ReadWhere(x => x.EntityApplicationID == Store.EntityApplicationID);
+    //  return Ok(forms);
+    //}
+
+    //[HttpGet]
+    //[Route("ui/system")]
+    //public IActionResult GetSystem()
+    //{
+    //  Background background = backgroundRepository.ReadWhere(x => x.EntityApplicationID == Store.EntityApplicationID).FirstOrDefault();
+    //  IEnumerable<NavLinks> navItems = navItemsReporsitory.ReadWhere(x => x.EntityApplicationID == Store.EntityApplicationID);
+    //  IEnumerable<Forms> forms = formRepository.ReadWhere(x => x.EntityApplicationID == Store.EntityApplicationID);
+
+    //  return Ok(new
+    //  {
+    //    Store,
+    //    background,
+    //    navItems,
+    //    forms
+    //  });
+    //}
 
 
   }

@@ -2,8 +2,8 @@
 
 namespace Godspeed.Domain.Models.Manage
 {
-  [Table(nameof(EntityApplicationUser), Schema = "Manage")]
-  public class EntityApplicationUser
+  [Table(nameof(Customer), Schema = "Manage")]
+  public class Customer
   {
     public int EntityApplicationUserID { get; set; }
     public int EntityApplicationID { get; set; }

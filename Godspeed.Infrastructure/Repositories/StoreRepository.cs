@@ -1,12 +1,13 @@
 ﻿using Godspeed.Domain.Models.Manage;
 using Godspeed.Infrastructure.Context.Aspire;
+using Godspeed.Infrastructure.Context.SecureGateContext;
 using Godspeed.Infrastructure.Repositories.Base;
 
 namespace Godspeed.Infrastructure.Repositories
 {
-  public class EntityApplicationRepository : GenericRepository<EntityApplication, AspireWebContext>
+  public class StoreRepository : GenericRepository<Store, SecureGateContext>
   {
-        public EntityApplicationRepository(AspireWebContext ctx) : base(ctx)
+        public StoreRepository(SecureGateContext ctx) : base(ctx)
         {
 
         }

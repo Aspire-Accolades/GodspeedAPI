@@ -1,20 +1,11 @@
-﻿using System.Configuration;
-using Godspeed.Domain.Models.Manage;
-using Godspeed.Infrastructure.Helpers;
-using Godspeed.Infrastructure.Repositories;
+﻿using Godspeed.Domain.Models.Manage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GodspeedAPI.Controllers.Base
 {
   public class BaseController : Controller
   {
-    public EntityApplication Application;
-    public BaseController(ApplicationHelper applicationHelper)
-    {
-      Application = applicationHelper.GetApplication();
-
-    }
-
+    public static Store Store { get; set; }
 
   }
 }
