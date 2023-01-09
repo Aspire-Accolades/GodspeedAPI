@@ -1,7 +1,5 @@
-﻿
-using Godspeed.Infrastructure.Context;
-using Godspeed.Infrastructure.Context.Aspire;
-using Godspeed.Infrastructure.Helpers;
+﻿using Godspeed.Infrastructure.Context.Aspire;
+using Godspeed.Infrastructure.Context.SecureGateContext;
 using Godspeed.Infrastructure.Repositories;
 
 namespace GodspeedAPI
@@ -11,14 +9,14 @@ namespace GodspeedAPI
     public static void Extend(this IServiceCollection services)
     {
       services.AddScoped<AspireContextOptions>();
+      services.AddScoped<SecureGateContextOptions>();
+      services.AddDbContext<SecureGateContext>();
       services.AddDbContext<AspireWebContext>();
-      services.AddScoped<EntityRepository>();
-      services.AddScoped<EntityApplicationRepository>();
+      services.AddScoped<StoreRepository>();
       services.AddScoped<EntityApplicationSettingsRepository>();
       services.AddScoped<BackgroundRepository>();
       services.AddScoped<NavItemsReporsitory>();
       services.AddScoped<FormRepository>();
-      services.AddScoped<ApplicationHelper>();
     }
   }
 }

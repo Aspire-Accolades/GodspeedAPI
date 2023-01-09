@@ -2,17 +2,17 @@
 
 namespace Godspeed.Domain.Models.Manage
 {
-  [Table(nameof(EntityApplication), Schema = "Manage")]
-  public class EntityApplication
+  [Table(nameof(StoreSettings), Schema = "Manage")]
+  public class StoreSettings
   {
+    public int EntityApplicationSettingID { get; set; }
     public int EntityApplicationID { get; set; }
-    public string Name { get; set; } = String.Empty;
-    public string Domain { get; set; } = String.Empty;
-    public int EntityID { get; set; }
+    public string Logo { get; set; } = String.Empty;
+    public string ThemeName { get; set; } = String.Empty;
     public DateTime DateAdded { get; set; }
     public string UserAdded { get; set; } = String.Empty;
     public DateTime DateModified { get; set; }
     public string UserModified { get; set; } = String.Empty;
-    public EntityApplicationSettings Settings { get; set; }
+    
   }
 }
