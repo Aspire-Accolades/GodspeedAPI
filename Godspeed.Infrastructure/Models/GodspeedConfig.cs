@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Godspeed.Infrastructure.Models
 {
-  public class GodspeedConfig : ISysConfig
+  public class GodspeedConfig : ISystemConfig
   {
     [ConfigurationValue(ConfigKey = "Settings:Store")]
     public string Store { get; set; }

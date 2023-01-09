@@ -34,6 +34,28 @@ namespace GodspeedAPI.Controllers
       return Ok(store);
     }
 
+    [HttpPost]
+    [Route("ui/AddStore/{name}")]
+    public IActionResult AddStore(string name)
+    {
+
+      Store testStore = new Store
+      {
+        Name = name,
+        Domain = name + ".aspire.com",
+        AlternateID = Guid.NewGuid(),
+        DateAdded = DateTime.Now,
+        UserAdded = "Godspeed Test",
+        DateModified = DateTime.Now,
+        UserModified = "Godspeed Test"
+      };
+
+     testStore = storeRepository.Create(testStore);
+
+
+      return Ok(testStore);
+    }
+
 
     //[HttpGet]
     //[Route("ui/background")]
